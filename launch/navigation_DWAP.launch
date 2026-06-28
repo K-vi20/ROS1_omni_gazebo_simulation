@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- ARGUMENTS -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <arg name="map_file" default="$(find car_robot)/maps/office_map.yaml"/>
+  <arg name="move_forward_only" default="false"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 1. เรียกใช้ gazebo.launch (spawn robot) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <include file="$(find car_robot)/launch/gazebo.launch"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 2. MAP SERVER - โหลดแผนที่ -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 3. AMCL - Adaptive Monte Carlo Localization -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <node name="amcl" pkg="amcl" type="amcl" output="screen">
+    <rosparam file="$(find car_robot)/config/amcl_params.yaml" command="load"/>
+    
+    <!-- Initial pose (ตรงกับตำแหน่ง spawn ใน gazebo.launch) -->
+    <param name="initial_pose_x" value="4.0"/>
+    <param name="initial_pose_y" value="0.0"/>
+    <param name="initial_pose_a" value="0.0"/>
+  </node>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 4. MOVE_BASE - Navigation Stack -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    
+    <!-- Load common costmap parameters -->
+    <rosparam file="$(find car_robot)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find car_robot)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
+    
+    <!-- Load costmap parameters -->
+    <rosparam file="$(find car_robot)/config/local_costmap.yaml" command="load"/>
+    <rosparam file="$(find car_robot)/config/global_costmap.yaml" command="load"/>
+    
+    <!-- Load planner parameters -->
+    <rosparam file="$(find car_robot)/config/base_DWAP_planner.yaml" command="load"/>
+    <rosparam file="$(find car_robot)/config/move_base_params.yaml" command="load"/>
+    
+    <!-- Planner selection -->
+    <param name="base_global_planner" value="global_planner/GlobalPlanner"/>
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>  <!-- ✅ แก้แล้ว -->
+    
+    <!-- Control frequencies -->
+    <param name="controller_frequency" value="10.0"/>
+    <param name="controller_patience" value="3.0"/>
+    <param name="planner_frequency" value="5.0"/>
+    <param name="planner_patience" value="5.0"/>
+    
+    <!-- Recovery behaviors -->
+    <param name="recovery_behavior_enabled" value="true"/>
+    <param name="clearing_rotation_allowed" value="true"/>
+    <param name="conservative_reset_dist" value="0.5"/>
+    
+    <!-- Oscillation prevention -->
+    <param name="oscillation_timeout" value="10.0"/>
+    <param name="oscillation_distance" value="0.2"/>
+  </node>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- 5. RViz - Visualization -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <node name="rviz"
+        pkg="rviz"
+        type="rviz"
+        args="-d $(find car_robot)/config/navigation.rviz"
+        output="screen"/>
+
+</launch>

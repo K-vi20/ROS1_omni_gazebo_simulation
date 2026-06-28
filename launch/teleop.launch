@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- รันหลัง launch_gazebo.launch เท่านั้น -->
+  <node name="teleop_skid"
+        pkg="car_robot"
+        type="teleop_skid.py"
+        output="screen"
+        launch-prefix="xterm -e"/>
+</launch>
+

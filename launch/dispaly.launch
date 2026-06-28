@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- ══════════════════════════════════
+       ARGUMENTS
+  ══════════════════════════════════ -->
+  <arg name="model" default="$(find car-robot)/urdf/bot.urdf"/>
+  <arg name="rviz"  default="true"/>
+
+  <!-- ══════════════════════════════════
+       ROBOT DESCRIPTION
+  ══════════════════════════════════ -->
+  <param name="robot_description" textfile="$(arg model)"/>
+
+  <!-- ══════════════════════════════════
+       ROBOT STATE PUBLISHER
+  ══════════════════════════════════ -->
+  <node name="robot_state_publisher"
+        pkg="robot_state_publisher"
+        type="robot_state_publisher"
+        output="screen">
+    <param name="publish_frequency" value="50.0"/>
+  </node>
+
+  <!-- ══════════════════════════════════
+       JOINT STATE PUBLISHER
+       (สำหรับ preview ใน RViz ไม่มี Gazebo)
+  ══════════════════════════════════ -->
+  <node name="joint_state_publisher"
+        pkg="joint_state_publisher"
+        type="joint_state_publisher"
+        output="screen">
+    <param name="use_gui" value="false"/>
+  </node>
+
+  <!-- ══════════════════════════════════
+       TELEOP (เปิด xterm แยก window)
+  ══════════════════════════════════ -->
+  <node name="teleop_skid"
+        pkg="car-robot"
+        type="teleop_skid.py"
+        output="screen"
+        launch-prefix="xterm -bg black -fg green -fs 12 -e"/>
+
+  <!-- ══════════════════════════════════
+       RVIZ (optional)
+  ══════════════════════════════════ -->
+  <group if="$(arg rviz)">
+    <node name="rviz"
+          pkg="rviz"
+          type="rviz"
+          args="-d $(find car-robot)/rviz/bot.rviz"
+          output="screen"
+          required="false"/>
+  </group>
+
+</launch>
+

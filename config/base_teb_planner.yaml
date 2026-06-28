@@ -1,0 +1,77 @@
+TebLocalPlannerROS:
+  # ═══════════════════════════════════════════════════════
+  # Robot Configuration (Holonomic - Mecanum/Omni)
+  # ═══════════════════════════════════════════════════════
+  holonomic_robot: true
+  
+  # Velocity limits (m/s)
+  max_vel_x: 0.5           # เคลื่อนที่ไปข้างหน้า
+  max_vel_x_backwards: 0.3 # ถอยหลัง ✅
+  max_vel_y: 0.5           # สไลด์ซ้าย-ขวา ✅
+  max_vel_theta: 1.0       # หมุนรอบตัวเอง ✅
+  
+  min_vel_x: 0.0
+  min_vel_y: 0.0
+  min_vel_theta: 0.0
+  
+  # Acceleration limits (m/s²)
+  acc_lim_x: 1.5
+  acc_lim_y: 1.5
+  acc_lim_theta: 2.0
+  
+  # ═══════════════════════════════════════════════════════
+  # Goal Tolerance
+  # ═══════════════════════════════════════════════════════
+  xy_goal_tolerance: 0.15
+  yaw_goal_tolerance: 0.1
+  
+  # ═══════════════════════════════════════════════════════
+  # Trajectory Configuration
+  # ═══════════════════════════════════════════════════════
+  min_samples: 10
+  max_samples: 50
+  dt_ref: 0.3
+  dt_hysteresis: 0.1
+  global_plan_viapoint_sep: 0.5
+  
+  # ═══════════════════════════════════════════════════════
+  # Optimization
+  # ═══════════════════════════════════════════════════════
+  optimization_activate: true
+  optimization_verbose: false
+  penalty_epsilon: 0.1
+  
+  # Weight parameters
+  weight_max_vel_x: 2.0
+  weight_max_vel_y: 2.0      # สำคัญสำหรับ lateral movement
+  weight_max_vel_theta: 1.0
+  weight_acc_lim_x: 1.0
+  weight_acc_lim_y: 1.0
+  weight_acc_lim_theta: 1.0
+  weight_kinematics_nh: 1000.0  # สำคัญสำหรับ holonomic
+  weight_kinematics_forward_drive: 1.0
+  weight_kinematics_turning_radius: 1.0
+  weight_optimaltime: 1.0
+  weight_obstacle: 50.0
+  weight_viapoint: 1.0
+  
+  # ═══════════════════════════════════════════════════════
+  # Obstacle Avoidance
+  # ═══════════════════════════════════════════════════════
+  min_obstacle_dist: 0.3
+  include_costmap_obstacles: true
+  costmap_obstacles_behind_robot_dist: 1.0
+  obstacle_poses_affected: 30
+  
+  # ═══════════════════════════════════════════════════════
+  # Recovery & Oscillation Prevention
+  # ═══════════════════════════════════════════════════════
+  oscillation_recovery: true
+  oscillation_v_eps: 0.1
+  oscillation_omega_eps: 0.1
+  oscillation_recovery_min_duration: 10.0
+  
+  # ═══════════════════════════════════════════════════════
+  # Visualization
+  # ═══════════════════════════════════════════════════════
+  publish_feedback: true

@@ -1,0 +1,26 @@
+# ═══════════════════════════════════════════════════════════
+# Local Costmap Parameters
+# ═══════════════════════════════════════════════════════════
+
+local_costmap:
+  global_frame: odom
+  robot_base_frame: base_footprint
+  update_frequency: 10.0
+  publish_frequency: 10.0
+  static_map: false
+  rolling_window: true
+  
+  plugins:
+    - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
+  
+  # Window size
+  width: 4.0
+  height: 4.0
+  resolution: 0.05
+  
+  # Origin (centered on robot)
+  origin_x: 0.0
+  origin_y: 0.0
+  
+  transform_tolerance: 0.5

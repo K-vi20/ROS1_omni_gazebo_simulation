@@ -1,0 +1,32 @@
+# ═══════════════════════════════════════════════════════════
+# Common Costmap Parameters
+# ═══════════════════════════════════════════════════════════
+
+# Robot footprint (square robot 0.6m x 0.6m)
+footprint: [[0.275, 0.175], [0.275, -0.175], [-0.275, -0.175], [-0.275, 0.175]]
+
+# หรือใช้ robot_radius แทน (ง่ายกว่า)
+#robot_radius: 0.25  # ครอบคลุมทั้งตัวถังและล้อ
+
+# Obstacle handling
+obstacle_range: 2.5
+raytrace_range: 3.0
+
+# Inflation (how far obstacles expand)
+inflation_radius: 0.55
+cost_scaling_factor: 10.0
+
+# Map type
+map_type: costmap
+
+# Observation sources (LiDAR)
+observation_sources: laser_scan_sensor
+
+laser_scan_sensor:
+  sensor_frame: lidar_link
+  data_type: LaserScan
+  topic: /scan
+  marking: true
+  clearing: true
+  min_obstacle_height: 0.0
+  max_obstacle_height: 2.0

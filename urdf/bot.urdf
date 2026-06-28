@@ -1,0 +1,437 @@
+<?xml version="1.0"?>
+<robot name="bot">
+
+  <material name="chassis_gray"><color rgba="0.30 0.30 0.35 1.0"/></material>
+  <material name="torso_green"> <color rgba="0.10 0.70 0.20 1.0"/></material>
+  <material name="wheel_dark">  <color rgba="0.15 0.15 0.15 1.0"/></material>
+  <material name="sensor_black"><color rgba="0.05 0.05 0.05 1.0"/></material>
+  <material name="sensor_blue"> <color rgba="0.10 0.30 0.80 1.0"/></material>
+
+  <!-- ─── BASE ───────────────────────────────────────────── -->
+  <link name="base_footprint"/>
+  <joint name="base_footprint_to_base_link" type="fixed">
+    <parent link="base_footprint"/>
+    <child  link="base_link"/>
+    <origin xyz="0 0 0.065" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.5 0.3 0.05"/></geometry>
+      <material name="chassis_gray"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.5 0.3 0.05"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.007708" ixy="0.0" ixz="0.0"
+               iyy="0.021042" iyz="0.0"
+               izz="0.027083"/>
+    </inertial>
+  </link>
+
+  <!-- ─── TORSO ──────────────────────────────────────────── -->
+  <link name="torso">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.6 0.3 0.1"/></geometry>
+      <material name="torso_green"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.6 0.3 0.1"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="2.0"/>
+      <inertia ixx="0.016667" ixy="0.0" ixz="0.0"
+               iyy="0.061667" iyz="0.0"
+               izz="0.075000"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_torso" type="fixed">
+    <parent link="base_link"/>
+    <child  link="torso"/>
+    <origin xyz="0 0 0.075" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ─── WHEELS ─────────────────────────────────────────── -->
+  <link name="front_left_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+      <material name="wheel_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.0001825" ixy="0.0" ixz="0.0"
+               iyy="0.0002400" iyz="0.0"
+               izz="0.0001825"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_front_left_wheel" type="continuous">
+    <parent link="base_link"/><child link="front_left_wheel"/>
+    <origin xyz="0.150 0.175 -0.025" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="front_right_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+      <material name="wheel_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.0001825" ixy="0.0" ixz="0.0"
+               iyy="0.0002400" iyz="0.0"
+               izz="0.0001825"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_front_right_wheel" type="continuous">
+    <parent link="base_link"/><child link="front_right_wheel"/>
+    <origin xyz="0.150 -0.175 -0.025" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="rear_left_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+      <material name="wheel_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.0001825" ixy="0.0" ixz="0.0"
+               iyy="0.0002400" iyz="0.0"
+               izz="0.0001825"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_rear_left_wheel" type="continuous">
+    <parent link="base_link"/><child link="rear_left_wheel"/>
+    <origin xyz="-0.150 0.175 -0.025" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="rear_right_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+      <material name="wheel_dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.05"/></geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.0001825" ixy="0.0" ixz="0.0"
+               iyy="0.0002400" iyz="0.0"
+               izz="0.0001825"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_rear_right_wheel" type="continuous">
+    <parent link="base_link"/><child link="rear_right_wheel"/>
+    <origin xyz="-0.150 -0.175 -0.025" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- ─── IMU ────────────────────────────────────────────── -->
+  <!-- ติดที่กลาง base_link บนสุด -->
+  <link name="imu_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.03 0.03 0.01"/></geometry>
+      <material name="sensor_black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.03 0.03 0.01"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+               iyy="0.000001" iyz="0"
+               izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_imu" type="fixed">
+    <parent link="base_link"/>
+    <child  link="imu_link"/>
+    <origin xyz="0 0 0.03" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ─── LIDAR (RPLidar 2D) ─────────────────────────────── -->
+  <!-- ติดบนสุดของ torso ด้านหน้า -->
+  <link name="lidar_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.04"/></geometry>
+      <material name="sensor_black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.04"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.17"/>
+      <inertia ixx="0.000050" ixy="0" ixz="0"
+               iyy="0.000050" iyz="0"
+               izz="0.000091"/>
+    </inertial>
+  </link>
+  <joint name="torso_to_lidar" type="fixed">
+    <parent link="torso"/>
+    <child  link="lidar_link"/>
+    <origin xyz="0.2 0 0.07" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ─── RGB CAMERA ─────────────────────────────────────── -->
+  <!-- ติดหน้า torso ระดับกลาง -->
+  <link name="camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.02 0.08 0.03"/></geometry>
+      <material name="sensor_blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.02 0.08 0.03"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.000010" ixy="0" ixz="0"
+               iyy="0.000010" iyz="0"
+               izz="0.000010"/>
+    </inertial>
+  </link>
+  <joint name="torso_to_camera" type="fixed">
+    <parent link="torso"/>
+    <child  link="camera_link"/>
+    <origin xyz="0.31 0 0.01" rpy="0 0 0"/>
+  </joint>
+
+  <!-- optical frame (Z หน้า, X ขวา, Y ลง — convention มาตรฐาน ROS) -->
+  <link name="camera_optical_link"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child  link="camera_optical_link"/>
+    <origin xyz="0 0 0" rpy="-1.5707963 0 -1.5707963"/>
+  </joint>
+
+  <!-- ─── DEPTH CAMERA (RealSense D435 style) ────────────── -->
+  <link name="depth_camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.025 0.09 0.025"/></geometry>
+      <material name="sensor_black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.025 0.09 0.025"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.072"/>
+      <inertia ixx="0.000010" ixy="0" ixz="0"
+               iyy="0.000010" iyz="0"
+               izz="0.000010"/>
+    </inertial>
+  </link>
+  <joint name="torso_to_depth_camera" type="fixed">
+    <parent link="torso"/>
+    <child  link="depth_camera_link"/>
+    <origin xyz="0.31 0 -0.02" rpy="0 0 0"/>
+  </joint>
+
+  <link name="depth_camera_optical_link"/>
+  <joint name="depth_camera_optical_joint" type="fixed">
+    <parent link="depth_camera_link"/>
+    <child  link="depth_camera_optical_link"/>
+    <origin xyz="0 0 0" rpy="-1.5707963 0 -1.5707963"/>
+  </joint>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GAZEBO PLUGINS
+  ═══════════════════════════════════════════════════════════ -->
+
+  <!-- Wheel friction -->
+  <gazebo reference="front_left_wheel">
+    <material>Gazebo/Black</material>
+    <mu1>1.0</mu1><mu2>1.0</mu2>
+  </gazebo>
+  <gazebo reference="front_right_wheel">
+    <material>Gazebo/Black</material>
+    <mu1>1.0</mu1><mu2>1.0</mu2>
+  </gazebo>
+  <gazebo reference="rear_left_wheel">
+    <material>Gazebo/Black</material>
+    <mu1>1.0</mu1><mu2>1.0</mu2>
+  </gazebo>
+  <gazebo reference="rear_right_wheel">
+    <material>Gazebo/Black</material>
+    <mu1>1.0</mu1><mu2>1.0</mu2>
+  </gazebo>
+
+  <!-- 1. Holonomic drive -->
+  <gazebo>
+    <plugin name="gazebo_ros_planar_move" filename="libgazebo_ros_planar_move.so">
+      <robotNamespace>/</robotNamespace>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <publishTF>true</publishTF>
+      <publishOdomTF>true</publishOdomTF>
+      <odometryRate>20.0</odometryRate>
+   </plugin>
+  </gazebo>
+
+  <!-- 2. IMU plugin -->
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+      <robotNamespace>/</robotNamespace>
+      <topicName>imu/data</topicName>
+      <bodyName>imu_link</bodyName>
+      <frameName>imu_link</frameName>
+      <updateRateHZ>50.0</updateRateHZ>
+      <gaussianNoise>0.005</gaussianNoise>
+      <xyzOffset>0 0 0</xyzOffset>
+      <rpyOffset>0 0 0</rpyOffset>
+    </plugin>
+  </gazebo>
+
+  <!-- 3. LiDAR plugin (RPLidar 2D — 360 deg) -->
+  <gazebo reference="lidar_link">
+    <sensor type="ray" name="lidar_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle> 3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.15</min>
+          <max>12.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="lidar_plugin" filename="libgazebo_ros_laser.so">
+        <robotNamespace>/</robotNamespace>
+        <topicName>scan</topicName>
+        <frameName>lidar_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- 4. RGB Camera plugin -->
+  <gazebo reference="camera_link">
+    <sensor type="camera" name="rgb_camera">
+      <update_rate>30.0</update_rate>
+      <visualize>true</visualize>
+      <camera name="rgb_camera">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>20.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_plugin" filename="libgazebo_ros_camera.so">
+        <robotNamespace>/</robotNamespace>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>30.0</updateRate>
+        <cameraName>camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>camera_optical_link</frameName>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- 5. Depth Camera plugin (RealSense D435 style) -->
+  <gazebo reference="depth_camera_link">
+    <sensor type="depth" name="depth_camera">
+      <update_rate>30.0</update_rate>
+      <visualize>true</visualize>
+      <camera name="depth_camera">
+        <horizontal_fov>1.5184</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>10.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.005</stddev>
+        </noise>
+      </camera>
+      <plugin name="depth_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+        <robotNamespace>/</robotNamespace>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>30.0</updateRate>
+        <cameraName>depth_camera</cameraName>
+        <imageTopicName>color/image_raw</imageTopicName>
+        <cameraInfoTopicName>color/camera_info</cameraInfoTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <frameName>depth_camera_optical_link</frameName>
+        <pointCloudCutoff>0.1</pointCloudCutoff>
+        <pointCloudCutoffMax>10.0</pointCloudCutoffMax>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
+

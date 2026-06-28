@@ -1,0 +1,68 @@
+# ═══════════════════════════════════════════════════════════
+# TrajectoryPlannerROS for Holonomic Robot
+# ═══════════════════════════════════════════════════════════
+
+TrajectoryPlannerROS:
+  # ═══════════════════════════════════════════════════════
+  # Robot Configuration
+  # ═══════════════════════════════════════════════════════
+  
+  # Acceleration limits
+  acc_lim_x: 1.5
+  acc_lim_y: 1.5
+  acc_lim_theta: 2.0
+  
+# Velocity limits (m/s และ rad/s)
+  max_vel_x: 0.5
+  min_vel_x: 0.1          # ✅ ค่าบวก (minimum forward speed)
+  max_vel_y: 0.5
+  min_vel_y: 0.0          # ✅ แก้จาก -0.5 เป็น 0.0 (อนุญาตให้หยุด lateral)
+  max_vel_theta: 1.0
+  min_vel_theta: 0.2      # ✅ แก้จาก -1.0 เป็น 0.2 (minimum rotation speed)
+  min_in_place_vel_theta: 0.4
+  
+  # Holonomic robot (IMPORTANT for Mecanum/Omni)
+  holonomic_robot: true
+  
+  # ═══════════════════════════════════════════════════════
+  # Goal Tolerance
+  # ═══════════════════════════════════════════════════════
+  xy_goal_tolerance: 0.15
+  yaw_goal_tolerance: 0.1
+  
+  # ═══════════════════════════════════════════════════════
+  # Forward Simulation Parameters
+  # ═══════════════════════════════════════════════════════
+  sim_time: 1.7
+  sim_granularity: 0.025
+  angular_sim_granularity: 0.025
+  vx_samples: 20
+  vy_samples: 10
+  vtheta_samples: 40
+  
+  # ═══════════════════════════════════════════════════════
+  # Trajectory Scoring Parameters
+  # ═══════════════════════════════════════════════════════
+  meter_scoring: true
+  pdist_scale: 0.6
+  gdist_scale: 0.8
+  occdist_scale: 0.01
+  heading_lookahead: 0.325
+  heading_scoring: false
+  heading_scoring_timestep: 0.8
+  dwa: true
+  
+  # ═══════════════════════════════════════════════════════
+  # Oscillation Prevention
+  # ═══════════════════════════════════════════════════════
+  oscillation_reset_dist: 0.05
+  
+  # ═══════════════════════════════════════════════════════
+  # Global Plan Parameters
+  # ═══════════════════════════════════════════════════════
+  prune_plan: true
+  
+  # ═══════════════════════════════════════════════════════
+  # Differential drive (set to false for holonomic)
+  # ═══════════════════════════════════════════════════════
+  escape_vel: -0.1
